@@ -212,13 +212,16 @@
             75% { clip: rect(60px, 900px, 70px, 0); }
         }
 
-        /* CLUE EPSILON: CSS content property with unicode */
+        /* CLUE EPSILON: CSS content property with unicode - HIDDEN */
         .unicode-clue::after {
             content: "\004B"; /* Unicode for K - the final letter */
-            color: #ff6b35;
+            color: transparent; /* Make it invisible */
             font-weight: bold;
             margin-left: 5px;
+            user-select: text; /* Allow selection to reveal it */
         }
+
+        /* Students need to inspect this element to see the unicode in the CSS */
 
         .code-input-section {
             background: linear-gradient(145deg, #1a1a2e, #16213e);

@@ -1,0 +1,993 @@
+.progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b35, #ffd700);
+            width: 0%;
+            transition: width 2s ease;
+        }<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archaeological Institute - Emergency Case File</title>
+    <!-- 
+        CASE FILE #001: Dr. Elena Vasquez has vanished!
+        Her last message: "The ancient codex holds the key... look beyond what the eye can see..."
+        CLUE ALPHA: ROT13 cipher - Svefg yrggre vf F (First letter is S)
+    -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 48, 0.3), transparent 50%),
+                linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Secret morse code in CSS animation delays: C-O-D-E-X */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .classified-header {
+            background: linear-gradient(45deg, #8b0000, #ff4444);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            border: 3px solid #ff0000;
+            margin-bottom: 30px;
+            animation: flicker 3s infinite;
+        }
+
+        .main-title {
+            font-family: 'Creepster', cursive;
+            font-size: 3em;
+            text-align: center;
+            color: #ff6b35;
+            text-shadow: 3px 3px 0px #000, 0 0 30px #ff6b35;
+            margin: 30px 0;
+            letter-spacing: 2px;
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .evidence-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .evidence-box:hover {
+            border-color: #ff6b35;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+
+        /* CLUE BETA: Hidden in CSS selector - second letter is P */
+        .clue-beta-second-letter-P {
+            display: none;
+            content: "Second letter revealed in selector name";
+        }
+
+        .ancient-scroll {
+            background: 
+                linear-gradient(45deg, #8b4513, #daa520),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="20" fill="%23654321">📜</text></svg>');
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 3px solid #8b4513;
+            color: #2f1b14;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .ancient-scroll::before {
+            content: "🔍 Ancient Text Requires Special Vision 🔍";
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #ff6b35;
+        }
+
+        /* CLUE GAMMA: Invisible text technique */
+        .invisible-clue {
+            color: transparent;
+            background: transparent;
+            user-select: text;
+            /* Students need to highlight this text to see: "Third letter is A - the ancient power awakens" */
+        }
+
+        .lab-equipment {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .device {
+            background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+            border: 2px solid #555;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            min-width: 200px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .device:hover {
+            border-color: #00ff00;
+        }
+
+        /* CLUE DELTA: Transform technique */
+        .upside-down {
+            transform: rotate(180deg);
+            font-family: monospace;
+            margin: 10px 0;
+            /* When rotated back, reads: "Fourth letter = E" */
+        }
+
+        .glitch-text {
+            font-family: 'Courier New', monospace;
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 2px;
+            width: 100%;
+            height: 100%;
+            color: #ff0000;
+            overflow: hidden;
+            animation: glitch1 2s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: -2px;
+            width: 100%;
+            height: 100%;
+            color: #00ff00;
+            overflow: hidden;
+            animation: glitch2 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch1 {
+            0%, 100% { clip: rect(0, 900px, 0, 0); }
+            20% { clip: rect(50px, 900px, 60px, 0); }
+            40% { clip: rect(20px, 900px, 30px, 0); }
+            60% { clip: rect(80px, 900px, 90px, 0); }
+            80% { clip: rect(40px, 900px, 50px, 0); }
+        }
+
+        @keyframes glitch2 {
+            0%, 100% { clip: rect(0, 900px, 0, 0); }
+            15% { clip: rect(30px, 900px, 40px, 0); }
+            35% { clip: rect(70px, 900px, 80px, 0); }
+            55% { clip: rect(10px, 900px, 20px, 0); }
+            75% { clip: rect(60px, 900px, 70px, 0); }
+        }
+
+        /* CLUE EPSILON: CSS content property with unicode */
+        .unicode-clue::after {
+            content: "\004B"; /* Unicode for K - the final letter */
+            color: #ff6b35;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .code-input-section {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border: 3px solid #ff6b35;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .code-input {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .code-letter {
+            width: 60px;
+            height: 60px;
+            font-size: 2em;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #666;
+            border-radius: 8px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .code-letter:focus {
+            border-color: #ff6b35;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            outline: none;
+        }
+
+        .code-letter.correct {
+            background: linear-gradient(145deg, #004d00, #006600);
+            border-color: #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+
+        .code-letter.incorrect {
+            background: linear-gradient(145deg, #4d0000, #660000);
+            border-color: #ff0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .unlock-btn {
+            background: linear-gradient(145deg, #ff6b35, #ff8c42);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .unlock-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.7);
+        }
+
+        .unlock-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .hint-btn {
+            background: linear-gradient(145deg, #2196F3, #1976D2);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .hint-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(33, 150, 243, 0.5);
+        }
+
+        .attempts-counter {
+            margin: 15px 0;
+            font-size: 1.1em;
+            color: #ffd700;
+        }
+
+        .final-chamber {
+            background: radial-gradient(circle, #1a0033, #000000);
+            border: 3px solid #ff6b35;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            display: none;
+        }
+
+        .secret-message {
+            font-family: 'Nosifer', cursive;
+            font-size: 1.5em;
+            color: #ff6b35;
+            text-shadow: 0 0 10px #ff6b35;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .terminal {
+            background: #000;
+            color: #00ff00;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 2px solid #00ff00;
+        }
+
+        .warning {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px dashed #ff0000;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            animation: flicker 4s infinite;
+        }
+
+        .artifact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .artifact {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .artifact:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .clue-tracker {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .clue-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .clue-btn {
+            background: linear-gradient(145deg, #444, #333);
+            color: #ccc;
+            border: 2px solid #666;
+            padding: 15px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .clue-btn:hover:not(.found) {
+            border-color: #ff6b35;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
+            transform: scale(1.02);
+        }
+
+        .clue-btn.found {
+            background: linear-gradient(145deg, #1a5a1a, #0d400d);
+            border-color: #00ff00;
+            color: #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+        }
+
+        .clue-btn .clue-letter {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ff6b35;
+        }
+
+        .clue-btn.found .clue-letter {
+            color: #00ff00;
+        }
+
+        .clue-btn .clue-description {
+            font-size: 0.8em;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .clue-btn.found .clue-description {
+            opacity: 1;
+        }
+
+        .progress-summary {
+            margin: 20px 0;
+            font-size: 1.1em;
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .case-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="classified-header">
+        ⚠️ CLASSIFIED - ARCHAEOLOGICAL EMERGENCY - CLEARANCE LEVEL 5 REQUIRED ⚠️
+    </div>
+
+    <div class="container">
+        <h1 class="main-title">The Cipher of the Lost Codex</h1>
+
+        <div class="warning">
+            <strong>🚨 URGENT ALERT:</strong> Dr. Elena Vasquez, our lead archaeologist, disappeared while investigating the ancient Mayan codex. Her last transmission contained cryptic references to "hidden messages in plain sight." You are our digital forensics expert - examine every pixel of this case file!
+        </div>
+
+        <div class="case-grid">
+            <div class="evidence-box">
+                <h3>📋 Missing Person Report</h3>
+                <p><strong>Name:</strong> Dr. Elena Vasquez</p>
+                <p><strong>Specialty:</strong> Ancient Digital Cryptography</p>
+                <p><strong>Last Known Location:</strong> Underground Archives</p>
+                <p><strong>Status:</strong> Missing for 72 hours</p>
+            </div>
+
+        <div class="clue-tracker">
+            <h3>🔍 CLUE DISCOVERY TRACKER</h3>
+            <p>Click each button when you discover the corresponding clue!</p>
+            
+            <div class="clue-buttons">
+                <button class="clue-btn" id="clue1" onclick="markClueFound(1)">
+                    <div class="clue-letter">?</div>
+                    <div class="clue-description">Clue #1<br>Ancient Cipher</div>
+                </button>
+                
+                <button class="clue-btn" id="clue2" onclick="markClueFound(2)">
+                    <div class="clue-letter">?</div>
+                    <div class="clue-description">Clue #2<br>Machine Language</div>
+                </button>
+                
+                <button class="clue-btn" id="clue3" onclick="markClueFound(3)">
+                    <div class="clue-letter">?</div>
+                    <div class="clue-description">Clue #3<br>Invisible Text</div>
+                </button>
+                
+                <button class="clue-btn" id="clue4" onclick="markClueFound(4)">
+                    <div class="clue-letter">?</div>
+                    <div class="clue-description">Clue #4<br>Upside Down</div>
+                </button>
+                
+                <button class="clue-btn" id="clue5" onclick="markClueFound(5)">
+                    <div class="clue-letter">?</div>
+                    <div class="clue-description">Clue #5<br>Unicode Symbol</div>
+                </button>
+            </div>
+            
+            <div class="progress-summary">
+                <span id="progressText">Progress: 0/5 clues discovered</span>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+        </div>
+
+        <div class="ancient-scroll">
+            <h3>📜 The Mayan Digital Codex Fragment</h3>
+            <p>Ancient text speaks of five sacred symbols that unlock the chamber of eternal knowledge. The scribes hid these symbols using techniques unknown to their time...</p>
+            
+            <div class="invisible-clue">
+                Third letter is A - the ancient power awakens
+            </div>
+            
+            <p style="margin-top: 15px;"><em>"Seek where mortals cannot see, in the language of the machine spirits..."</em></p>
+        </div>
+
+        <div class="lab-equipment">
+            <div class="device">
+                <h4>🔬 Code Analyzer</h4>
+                <p>Status: <span style="color: #00ff00;">ONLINE</span></p>
+                <div class="upside-down">R = ɹǝʇʇǝl ɥʇɹnoℲ</div>
+            </div>
+
+            <div class="device">
+                <h4>📡 Signal Detector</h4>
+                <p>Detecting anomalous patterns...</p>
+                <p class="unicode-clue">Final symbol detected: <strong>Letter #5</strong></p>
+            </div>
+
+            <div class="device">
+                <h4>🖥️ Quantum Computer</h4>
+                <div class="terminal">
+                    <p>$ quantum_decrypt --ancient-cipher</p>
+                    <p class="glitch-text" data-text="SYSTEM COMPROMISED">SYSTEM COMPROMISED</p>
+                    <p>Dr. Vasquez's final log: "The machine spirits guard their secrets well..."</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="artifact-grid">
+            <div class="artifact">
+                <h4>🏺 Artifact #001</h4>
+                <p>Ceremonial Vessel</p>
+                <p><small>Contains traces of digital residue</small></p>
+            </div>
+            <div class="artifact">
+                <h4>⚱️ Artifact #002</h4>
+                <p>Memory Crystal</p>
+                <p><small>Partially corrupted data</small></p>
+            </div>
+            <div class="artifact">
+                <h4>🗿 Artifact #003</h4>
+                <p>Stone Tablet</p>
+                <p><small>Binary inscriptions detected</small></p>
+            </div>
+        </div>
+
+        <div class="warning">
+            <h3>🔐 DECRYPTION CHALLENGE</h3>
+            <p><strong>Mission:</strong> Find all 5 letters hidden throughout this case file:</p>
+            <ol>
+                <li>First letter: Hidden in ancient cipher (check HTML comments)</li>
+                <li>Second letter: Concealed in the machine's language (CSS selectors)</li>
+                <li>Third letter: Invisible to the naked eye (select/highlight technique)</li>
+                <li>Fourth letter: Turned upside down by chaos (CSS transforms)</li>
+                <li>Fifth letter: Encoded in the universal language (Unicode in CSS)</li>
+            </ol>
+            <p><strong>Tools needed:</strong> Developer Tools, Inspector, and keen observation!</p>
+        </div>
+
+        <div class="code-input-section">
+            <h3>🔐 CHAMBER ACTIVATION TERMINAL</h3>
+            <p>Enter the 5-letter activation code to unlock the secret chamber:</p>
+            
+            <div class="code-input">
+                <input type="text" maxlength="1" class="code-letter" id="letter1" oninput="handleInput(this, 1)" onkeydown="handleKeyDown(event, this, 1)">
+                <input type="text" maxlength="1" class="code-letter" id="letter2" oninput="handleInput(this, 2)" onkeydown="handleKeyDown(event, this, 2)">
+                <input type="text" maxlength="1" class="code-letter" id="letter3" oninput="handleInput(this, 3)" onkeydown="handleKeyDown(event, this, 3)">
+                <input type="text" maxlength="1" class="code-letter" id="letter4" oninput="handleInput(this, 4)" onkeydown="handleKeyDown(event, this, 4)">
+                <input type="text" maxlength="1" class="code-letter" id="letter5" oninput="handleInput(this, 5)" onkeydown="handleKeyDown(event, this, 5)">
+            </div>
+
+            <div class="attempts-counter">
+                <span id="attemptsText">Attempts remaining: <span id="attemptsCount">5</span></span>
+            </div>
+
+            <button class="unlock-btn" onclick="checkCode()">🔓 UNLOCK CHAMBER</button>
+            <br>
+            <button class="hint-btn" onclick="showHint()" id="hintBtn">💡 Need a Hint?</button>
+            <button class="hint-btn" onclick="resetPuzzle()" style="background: linear-gradient(145deg, #f44336, #d32f2f);">🔄 Reset Puzzle</button>
+            
+            <div id="hintDisplay" style="display: none; margin: 15px 0; padding: 15px; background: rgba(33, 150, 243, 0.2); border-radius: 8px; border: 1px solid #2196F3;">
+            </div>
+
+            <div id="statusMessage" style="margin: 15px 0; font-weight: bold; min-height: 30px;"></div>
+        </div>
+
+        <!-- Final chamber will be created dynamically by JavaScript when code is correct -->
+    </div>
+
+    <script>
+        // Interactive progress tracking
+        let foundClues = 0;
+        let attemptsRemaining = 5;
+        let hintsUsed = 0;
+        const correctCode = 'SPARK';
+        const progressBar = document.getElementById('progressBar');
+        const clueLetters = ['S', 'P', 'A', 'R', 'K'];
+        const clueDescriptions = [
+            'ROT13 Cipher in HTML Comments',
+            'CSS Class Selector Name',  
+            'Invisible Text (Highlight to See)',
+            'Upside Down Text with CSS Transform',
+            'Unicode Character in CSS Pseudo-element'
+        ];
+        
+        // Mark a clue as found
+        function markClueFound(clueNumber) {
+            const clueBtn = document.getElementById(`clue${clueNumber}`);
+            const clueIndex = clueNumber - 1;
+            
+            if (!clueBtn.classList.contains('found')) {
+                // Mark as found
+                clueBtn.classList.add('found');
+                clueBtn.querySelector('.clue-letter').textContent = '✓';
+                
+                // Update progress
+                foundClues++;
+                updateProgress();
+                
+                // Visual feedback
+                console.log(`🔍 Clue ${clueNumber} discovered: "${clueLetters[clueIndex]}" - ${clueDescriptions[clueIndex]}`);
+                
+                // Celebration effects
+                clueBtn.style.animation = 'pulse 1s ease-in-out 3';
+                
+                if (foundClues === 5) {
+                    setTimeout(() => {
+                        alert('🎉 All clues discovered! You can now attempt to unlock the chamber!');
+                        document.querySelector('.code-input-section').scrollIntoView({ behavior: 'smooth' });
+                    }, 500);
+                }
+            } else {
+                console.log(`ℹ️ Clue ${clueNumber} already discovered!`);
+            }
+        }
+        
+        // Update progress display
+        function updateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            if (progressBar) {
+                progressBar.style.width = (foundClues * 20) + '%';
+            }
+            
+            if (progressText) {
+                progressText.textContent = `Progress: ${foundClues}/5 clues discovered`;
+            }
+            
+            const statusMessage = document.getElementById('statusMessage');
+            if (foundClues === 5 && statusMessage) {
+                statusMessage.innerHTML = '<span style="color: #ffd700;">🔍 All clues discovered! Enter the code to unlock the chamber.</span>';
+            }
+        }
+        
+        // Handle input in code boxes
+        function handleInput(input, position) {
+            input.value = input.value.toUpperCase();
+            
+            // Auto-advance to next input
+            if (input.value.length === 1 && position < 5) {
+                document.getElementById(`letter${position + 1}`).focus();
+            }
+            
+            // Clear any previous styling
+            input.classList.remove('correct', 'incorrect');
+            
+            // Check if all fields are filled to enable unlock button
+            updateUnlockButton();
+        }
+        
+        // Handle keyboard navigation
+        function handleKeyDown(event, input, position) {
+            if (event.key === 'Backspace' && input.value === '' && position > 1) {
+                // Move to previous input when backspacing on empty field
+                document.getElementById(`letter${position - 1}`).focus();
+            } else if (event.key === 'Enter') {
+                checkCode();
+            }
+        }
+        
+        // Update unlock button state
+        function updateUnlockButton() {
+            const allFilled = Array.from({length: 5}, (_, i) => {
+                const input = document.getElementById(`letter${i + 1}`);
+                return input && input.value.length === 1;
+            }).every(filled => filled);
+            
+            const unlockBtn = document.querySelector('.unlock-btn');
+            if (unlockBtn) {
+                unlockBtn.disabled = !allFilled;
+            }
+        }
+        
+        // Check the entered code
+        function checkCode() {
+            const enteredCode = Array.from({length: 5}, (_, i) => {
+                const input = document.getElementById(`letter${i + 1}`);
+                return input ? input.value : '';
+            }).join('');
+            
+            const statusMessage = document.getElementById('statusMessage');
+            
+            if (enteredCode.length !== 5) {
+                if (statusMessage) {
+                    statusMessage.innerHTML = '<span style="color: #ff6b35;">⚠️ Please enter all 5 letters first!</span>';
+                }
+                console.log('⚠️ Please fill in all 5 letter boxes before checking the code.');
+                return;
+            }
+            
+            if (enteredCode === correctCode) {
+                // Success!
+                Array.from({length: 5}, (_, i) => {
+                    const input = document.getElementById(`letter${i + 1}`);
+                    if (input) {
+                        input.classList.add('correct');
+                        input.disabled = true;
+                    }
+                });
+                
+                if (statusMessage) {
+                    statusMessage.innerHTML = '<span style="color: #00ff00;">✅ CHAMBER UNLOCKED! Accessing secret area...</span>';
+                }
+                
+                const unlockBtn = document.querySelector('.unlock-btn');
+                if (unlockBtn) unlockBtn.disabled = true;
+                
+                const hintBtn = document.getElementById('hintBtn');
+                if (hintBtn) hintBtn.style.display = 'none';
+                
+                // Show the final chamber after a dramatic pause
+                setTimeout(() => {
+                    // Create the final chamber dynamically
+                    const finalChamber = document.createElement('div');
+                    finalChamber.className = 'final-chamber';
+                    finalChamber.style.display = 'block';
+                    finalChamber.innerHTML = `
+                        <div class="secret-message">
+                            🎉 CHAMBER UNLOCKED! 🎉<br>
+                            <p>The activation code is <strong>SPARK</strong>!</p>
+                            <p>Dr. Elena Vasquez found safe in the hidden chamber, along with the complete ancient digital codex. The Mayans were apparently early pioneers of steganography - hiding messages in plain sight using techniques that wouldn't be "discovered" for another thousand years!</p>
+                            <p>The ancient power has been awakened - the SPARK of knowledge ignites the future!</p>
+                            <p><strong>Case Status:</strong> ✅ SOLVED</p>
+                            <p><em>"Sometimes the greatest mysteries are hidden in the smallest details..."</em> - Dr. E. Vasquez</p>
+                        </div>
+                    `;
+                    
+                    // Add it to the page
+                    document.querySelector('.container').appendChild(finalChamber);
+                    finalChamber.scrollIntoView({ behavior: 'smooth' });
+                }, 2000);
+                
+                console.log('🎉 Congratulations! You solved the mystery!');
+                
+            } else {
+                // Incorrect code
+                attemptsRemaining--;
+                const attemptsCount = document.getElementById('attemptsCount');
+                if (attemptsCount) {
+                    attemptsCount.textContent = attemptsRemaining;
+                }
+                
+                // Highlight incorrect letters
+                Array.from({length: 5}, (_, i) => {
+                    const input = document.getElementById(`letter${i + 1}`);
+                    if (input) {
+                        input.classList.add('incorrect');
+                        setTimeout(() => input.classList.remove('incorrect'), 500);
+                    }
+                });
+                
+                if (attemptsRemaining > 0) {
+                    if (statusMessage) {
+                        statusMessage.innerHTML = `<span style="color: #ff6b35;">❌ Incorrect code. ${attemptsRemaining} attempts remaining.</span>`;
+                    }
+                } else {
+                    if (statusMessage) {
+                        statusMessage.innerHTML = '<span style="color: #ff0000;">🚨 LOCKOUT ACTIVATED. Use the reset button to try again.</span>';
+                    }
+                    Array.from({length: 5}, (_, i) => {
+                        const input = document.getElementById(`letter${i + 1}`);
+                        if (input) input.disabled = true;
+                    });
+                    const unlockBtn = document.querySelector('.unlock-btn');
+                    if (unlockBtn) unlockBtn.disabled = true;
+                }
+            }
+        }
+        
+        // Show progressive hints
+        function showHint() {
+            hintsUsed++;
+            const hintDisplay = document.getElementById('hintDisplay');
+            hintDisplay.style.display = 'block';
+            
+            const hints = [
+                "💡 Hint 1: The first letter can be decoded using ROT13 cipher in the HTML comments.",
+                "💡 Hint 2: Look for CSS class names that seem to contain letters or words.",
+                "💡 Hint 3: Some text might be invisible - try highlighting/selecting all text on the page.",
+                "💡 Hint 4: Check for any text that looks upside down or rotated.",
+                "💡 Hint 5: The final letter might be hidden in CSS pseudo-elements (::before or ::after)."
+            ];
+            
+            if (hintsUsed <= hints.length) {
+                hintDisplay.innerHTML = hints[hintsUsed - 1];
+                if (hintsUsed >= hints.length) {
+                    document.getElementById('hintBtn').textContent = '🔍 All hints used!';
+                    document.getElementById('hintBtn').disabled = true;
+                }
+            }
+        }
+        
+        // Reset the entire puzzle
+        function resetPuzzle() {
+            attemptsRemaining = 5;
+            hintsUsed = 0;
+            foundClues = 0;
+            
+            document.getElementById('attemptsCount').textContent = attemptsRemaining;
+            document.getElementById('statusMessage').innerHTML = '';
+            document.getElementById('hintDisplay').style.display = 'none';
+            document.getElementById('hintBtn').textContent = '💡 Need a Hint?';
+            document.getElementById('hintBtn').disabled = false;
+            document.getElementById('hintBtn').style.display = 'inline-block';
+            
+            // Reset all input fields
+            Array.from({length: 5}, (_, i) => {
+                const input = document.getElementById(`letter${i + 1}`);
+                input.value = '';
+                input.disabled = false;
+                input.classList.remove('correct', 'incorrect');
+            });
+            
+            // Reset progress bar
+            progressBar.style.width = '0%';
+            
+            // Hide final chamber
+            const existingChamber = document.querySelector('.final-chamber');
+            if (existingChamber) {
+                existingChamber.remove();
+            }
+            document.querySelector('.unlock-btn').disabled = true;
+            
+            // Focus first input
+            document.getElementById('letter1').focus();
+        }
+        
+        // Simulate clue discovery (students can modify this in console)
+        function foundClue() {
+            if (foundClues < 5) {
+                markClueFound(foundClues + 1);
+            } else {
+                console.log('🎉 All clues already discovered!');
+            }
+        }
+        
+        // Easter egg for students who check the console
+        console.log('%c🔍 DETECTIVE MODE ACTIVATED', 'color: #ff6b35; font-size: 20px; font-weight: bold;');
+        console.log('Tip: Call foundClue() each time you discover a letter to track your progress!');
+        console.log('Advanced tip: Try typing "help" in the console for more commands.');
+        
+        // Console commands with helpful messages
+        window.help = function() {
+            console.log('🎮 Available Console Commands:');
+            console.log('foundClue() - Auto-mark the next clue as discovered');
+            console.log('markClueFound(1-5) - Mark a specific clue number as found');
+            console.log('enterCode("XXXXX") - Fill the input boxes with a 5-letter code');
+            console.log('tryCode("XXXXX") - Test if a code is correct (without using attempts)');
+            console.log('checkCodeConsole() - Check whatever is currently in the input boxes');
+            console.log('revealAllClues() - Show teacher solution guide');
+            console.log('giveUp() - Reveal the answer (but where\'s the fun in that?)');
+            console.log('💡 Remember: Click the clue buttons when you find each letter!');
+        };
+        
+        window.giveUp = function() {
+            console.log('The answer is: CODEX');
+            console.log('But remember - the real treasure is the HTML/CSS skills you learned along the way! 🏴‍☠️');
+            console.log('💡 Use enterCode("CODEX") to fill the input boxes automatically!');
+        };
+        
+        // Helper function to enter code directly
+        window.enterCode = function(code) {
+            if (code && code.length === 5) {
+                for (let i = 0; i < 5; i++) {
+                    const input = document.getElementById(`letter${i + 1}`);
+                    if (input) {
+                        input.value = code[i].toUpperCase();
+                    }
+                }
+                updateUnlockButton();
+                console.log(`✅ Code "${code.toUpperCase()}" entered in the input boxes!`);
+                console.log('Now click the "🔓 UNLOCK CHAMBER" button on the page!');
+            } else {
+                console.log('❌ Please provide a 5-letter code. Example: enterCode("CODEX")');
+            }
+        };
+        
+        // Allow direct code checking from console
+        window.checkCodeConsole = function() {
+            console.log('🔍 Checking the code in the input boxes...');
+            checkCode();
+        };
+        
+        // Better console command for checking codes directly
+        window.tryCode = function(code) {
+            if (code && code.length === 5) {
+                console.log(`🔍 Testing code: ${code.toUpperCase()}`);
+                if (code.toUpperCase() === correctCode) {
+                    console.log('✅ Correct! This is the right code!');
+                    console.log('💡 Use enterCode("' + code.toUpperCase() + '") to fill the boxes and unlock the chamber!');
+                } else {
+                    console.log('❌ Incorrect code. Keep searching for clues!');
+                }
+            } else {
+                console.log('❌ Please provide a 5-letter code. Example: tryCode("SPARK")');
+            }
+        };
+        
+        // Catch common student mistakes
+        window.SPARK = function() {
+            console.log('💡 Tip: SPARK is the answer, but you need to enter it in the input boxes!');
+            console.log('Try: enterCode("SPARK") or type the letters in the boxes on the page.');
+        };
+        
+        // Hidden console command for teachers
+        window.revealAllClues = function() {
+            console.log('🔍 TEACHER SOLUTION GUIDE:');
+            console.log('1. First letter (S): HTML comment with ROT13 cipher - "Svefg yrggre vf F"');
+            console.log('2. Second letter (P): CSS class selector ".clue-beta-second-letter-P"');
+            console.log('3. Third letter (A): Invisible text in ancient scroll - highlight to reveal');
+            console.log('4. Fourth letter (R): Upside down text using CSS transform in lab equipment');
+            console.log('5. Fifth letter (K): Unicode character \\004B in CSS ::after pseudo-element');
+            console.log('Final answer: SPARK');
+        };
+        
+        // Initialize with error handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstInput = document.getElementById('letter1');
+            if (firstInput) {
+                firstInput.focus();
+            }
+            updateUnlockButton();
+        });
+    </script>
+</body>
+</html>
